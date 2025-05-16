@@ -2,13 +2,9 @@
 npx tsx src/main.ts 
  */
 
-import {
-  McpServer,
-  ResourceTemplate,
-} from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import si from "systeminformation";
 
 const coinMarketCapApiKey = "f655223f-0c4b-41d5-ab85-bd25350b0d28"; // process.env.COIN_MARKET_CAP_API_KEY;
 const coinMarketCapUrl = "https://pro-api.coinmarketcap.com/v1"; // process.env.COIN_MARKET_CAP_URL;
@@ -23,10 +19,6 @@ const tai = new TechnicalAnalystIndicator();
 const server = new McpServer({
   name: "os-info-mcp-server",
   version: "1.0.0",
-  // capabilities: {
-  //   tools: {},
-  //   resources: {},
-  // },
 });
 
 // ... set up server resources, tools, and prompts ...
@@ -37,7 +29,6 @@ server.tool(
   { symbol: z.string() },
   async ({ symbol }) => {
     logger.log(`🚀 getCrypotoCurrencyAnalytics called with symbol: ${symbol}`);
-
     const data = await tai.getIndicator({
       exchange: "binance",
       symbol: symbol as IndicatorQueryParams["symbol"],
