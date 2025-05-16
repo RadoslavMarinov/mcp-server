@@ -1,0 +1,87 @@
+/**
+npx tsx src/main.ts 
+ */
+
+import {
+  McpServer,
+  ResourceTemplate,
+} from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
+import si from "systeminformation";
+
+const coinMarketCapApiKey = "f655223f-0c4b-41d5-ab85-bd25350b0d28"; // process.env.COIN_MARKET_CAP_API_KEY;
+const coinMarketCapUrl = "https://pro-api.coinmarketcap.com/v1"; // process.env.COIN_MARKET_CAP_URL;
+import "dotenv/config";
+import {
+  IndicatorQueryParams,
+  TechnicalAnalystIndicator,
+} from "./lib/resources/technical-analyst-indicator-data/TechnicalAnalystIndicator.js";
+import { logger } from "./logger.js";
+const tai = new TechnicalAnalystIndicator();
+
+const server = new McpServer({
+  name: "os-info-mcp-server",
+  version: "1.0.0",
+  // capabilities: {
+  //   tools: {},
+  //   resources: {},
+  // },
+});
+
+// ... set up server resources, tools, and prompts ...
+
+server.tool(
+  "getCrypotoCurrencyAnalytics",
+  "Fetches popular Technical Analysis (TA) Indicator Data on US stocks and cryptocurrencies",
+  { symbol: z.string() },
+  async ({ symbol }) => {
+    logger.log(`🚀 getCrypotoCurrencyAnalytics called with symbol: ${symbol}`);
+
+    const data = await tai.getIndicator({
+      exchange: "binance",
+      symbol: symbol as IndicatorQueryParams["symbol"],
+      interval: "1h",
+      indicator: "rsi",
+    });
+
+    return {
+      content: [{ type: "text", text: JSON.stringify(data) }],
+    };
+  }
+);
+
+server.tool(
+  "getLatestCryptoCurrecncy",
+  "Fetches the latest cryptocurrency prices",
+  async () => {
+    const data = await fetch(
+      `${coinMarketCapUrl}/cryptocurrency/listings/latest`,
+      {
+        method: "GET",
+        headers: {
+          "X-CMC_PRO_API_KEY": coinMarketCapApiKey || "",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .catch((err) => {
+        logger.log(`Error fetching cryptocurrency data: ${err}`);
+      });
+
+    logger.log(`🎉 Crypto currency data: ${JSON.stringify(data, null, 2)}`);
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(data, null, 2),
+        },
+      ],
+    };
+  }
+);
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
