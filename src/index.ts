@@ -14,6 +14,7 @@ import {
   TechnicalAnalystIndicator,
 } from "./lib/resources/technical-analyst-indicator-data/TechnicalAnalystIndicator.js";
 import { logger } from "./logger.js";
+import { CryptoCurrency } from "./lib/resources/CoinMarketCap/CoinMarketCap.js";
 const tai = new TechnicalAnalystIndicator();
 
 const server = new McpServer({
@@ -43,9 +44,14 @@ server.tool(
 );
 
 server.tool(
-  "getLatestCryptoCurrecncy",
+  "getLatestCryptoCurrency",
   "Fetches the latest cryptocurrency prices",
-  async () => {
+  { symbol: z.string(), name: z.string() },
+  async ({ symbol, name }) => {
+    logger.log(
+      `🚀 getLatestCryptoCurrency called with symbol: ${symbol} name ${name} `
+    );
+
     const data = await fetch(
       `${coinMarketCapUrl}/cryptocurrency/listings/latest`,
       {
@@ -57,6 +63,13 @@ server.tool(
       }
     )
       .then((res) => res.json())
+      .then((jsonData: any) => {
+        return (jsonData.data as unknown as CryptoCurrency[]).find(
+          (item) =>
+            item.symbol === symbol ||
+            item.name.toLowerCase() === name.toLowerCase()
+        );
+      })
       .catch((err) => {
         logger.log(`Error fetching cryptocurrency data: ${err}`);
       });
@@ -67,7 +80,7 @@ server.tool(
       content: [
         {
           type: "text",
-          text: JSON.stringify(data, null, 2),
+          text: JSON.stringify(data || [], null, 2),
         },
       ],
     };
