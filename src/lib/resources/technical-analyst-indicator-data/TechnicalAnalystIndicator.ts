@@ -3,6 +3,7 @@ import { logger } from "../../../logger.js";
 import { config } from "dotenv";
 import { FileUtils } from "../../Utils/FileUtils.js";
 import path from "path";
+import { z } from "zod";
 
 const dotenvFilePath = path.join(
   FileUtils.getDirName(import.meta.url),
@@ -14,49 +15,61 @@ config({
 });
 
 type Exchage = "binance";
-type TimeInterval =
-  | "1m"
-  | "5m"
-  | "15m"
-  | "30m"
-  | "1h"
-  | "2h"
-  | "4h"
-  | "12h"
-  | "1d"
-  | "1w";
 
-type ISymbol = "BTC/USDT" | "ETH/USDT" | "XRP/USDT" | "LTC/USDT"; // Free plan symbols
+export const TimeIntervalSchema = z.enum([
+  "1m",
+  "5m",
+  "15m",
+  "30m",
+  "1h",
+  "2h",
+  "4h",
+  "12h",
+  "1d",
+  "1w",
+]);
+export type TimeInterval = z.infer<typeof TimeIntervalSchema>;
 
-type Indicator =
-  | "bbands"
-  | "candle"
-  | "cci"
-  | "cmf"
-  | "dmi"
-  | "doji"
-  | "ema"
-  | "fibonacciretracement"
-  | "hma"
-  | "ichimoku"
-  | "ma"
-  | "macd"
-  | "mfi"
-  | "mom"
-  | "pivotpoints"
-  | "psar"
-  | "roc"
-  | "rsi"
-  | "stalledpattern"
-  | "stddev"
-  | "stoch"
-  | "stochrsi"
-  | "supertrend"
-  | "tdsequential"
-  | "tr"
-  | "trix"
-  | "typprice"
-  | "ultosc";
+export const ISymbolSchema = z.enum([
+  "BTC/USDT",
+  "ETH/USDT",
+  "XRP/USDT",
+  "LTC/USDT",
+]);
+export type ISymbol = z.infer<typeof ISymbolSchema>;
+
+export const IndicatorSchema = z.enum([
+  "bbands",
+  "candle",
+  "cci",
+  "cmf",
+  "dmi",
+  "doji",
+  "ema",
+  "fibonacciretracement",
+  "hma",
+  "ichimoku",
+  "ma",
+  "macd",
+  "mfi",
+  "mom",
+  "pivotpoints",
+  "psar",
+  "roc",
+  "rsi",
+  "stalledpattern",
+  "stddev",
+  "stoch",
+  "stochrsi",
+  "supertrend",
+  "tdsequential",
+  "tr",
+  "trix",
+  "typprice",
+  "ultosc",
+  "adx",
+]);
+export type Indicator = z.infer<typeof IndicatorSchema>;
 
 export interface IndicatorQueryParams {
   indicator: Indicator;

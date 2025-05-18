@@ -11,7 +11,9 @@ const coinMarketCapUrl = "https://pro-api.coinmarketcap.com/v1"; // process.env.
 import "dotenv/config";
 import {
   IndicatorQueryParams,
+  IndicatorSchema,
   TechnicalAnalystIndicator,
+  ISymbolSchema,
 } from "./lib/resources/technical-analyst-indicator-data/TechnicalAnalystIndicator.js";
 import { logger } from "./logger.js";
 import { CryptoCurrency } from "./lib/resources/CoinMarketCap/CoinMarketCap.js";
@@ -27,14 +29,14 @@ const server = new McpServer({
 server.tool(
   "getCrypotoCurrencyAnalytics",
   "Fetches popular Technical Analysis (TA) Indicator Data on US stocks and cryptocurrencies",
-  { symbol: z.string() },
-  async ({ symbol }) => {
+  { symbol: ISymbolSchema, indicator: IndicatorSchema },
+  async ({ symbol, indicator }) => {
     logger.log(`🚀 getCrypotoCurrencyAnalytics called with symbol: ${symbol}`);
     const data = await tai.getIndicator({
       exchange: "binance",
-      symbol: symbol as IndicatorQueryParams["symbol"],
+      symbol: symbol,
       interval: "1h",
-      indicator: "rsi",
+      indicator: indicator,
     });
 
     return {

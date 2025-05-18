@@ -1,4 +1,3 @@
-https://github.com/modelcontextprotocol/typescript-sdk
 
 
 ## Dockerization
@@ -28,15 +27,23 @@ https://github.com/modelcontextprotocol/typescript-sdk
 
     The configuration file should look similar to this:
     ![](./docs/claude/config-server.png) 
+  - restart Claude load the configuration and utilize the new tool
 
 
-[Coin Market Cap](https://coinmarketcap.com/api/documentation/v1/#)
+
 
 ## Examples
-  - ### getLatestCryptoCurrency
-    To utilize this tool, open Claude and enter:
-    > Give me latest price of Ethereum
 
   - ### Accept requests to check the prices of specific crypto assets.
-    Input:
+    __Input__:
     > What is the price of Ethereum?
+
+  - ### Determine whether the price of a given crypto asset is in a trending or ranging regime on the 1-hour chart, using both price data and technical analysis (TA) indicators
+    __Input__:
+      > Tell me if Bitcoin is currently ranging or trending using BTC/USDT symbol
+
+
+[Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1/#)
+[Technical Analysis Indicators API](https://taapi.io/indicators)
+
+https://github.com/modelcontextprotocol/typescript-sdk
