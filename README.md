@@ -6,14 +6,14 @@
     ```sh
     cp .env.example .env
     ```
+
   - Enter your values values for the two APIs __COIN_MARKET_CAP_API_KEY__ and __TA_API_KEY__
 
-## Dockerization
+## Build the Docker image:
 
-  - Build docker image
-    ```bash
-    docker build -t mcp-server .
-    ```
+  ```sh
+  docker build -t mcp-server .
+  ```
 
 ## Integration with Claude
 
@@ -45,6 +45,10 @@
     __Input__:
       > Tell me if Bitcoin is currently ranging or trending using BTC/USDT symbol
 
+
+## Notes:
+
+  - 👉 Due to the limitations imposed upon by free plan of the APIs used, some results might not be satisfactory or of high value. Some endpoint might refuse to return data for certain _symbols_ or _indicators_ as they might not be part of the free plan. Another common issue with free plan usage is throttling. That is consequent requests are being rejected until the quota is freed up.
 
 [Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1/#)
 [Technical Analysis Indicators API](https://taapi.io/indicators)

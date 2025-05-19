@@ -16,25 +16,23 @@ config({
   path: dotenvFilePath,
 });
 
-const coinMarketCapApiKey = "f655223f-0c4b-41d5-ab85-bd25350b0d28"; // process.env.COIN_MARKET_CAP_API_KEY;
-const coinMarketCapUrl = "https://pro-api.coinmarketcap.com/v1"; // process.env.COIN_MARKET_CAP_URL;
-import "dotenv/config";
 import {
   IndicatorSchema,
   TechnicalAnalystIndicator,
   ISymbolSchema,
-} from "./lib/resources/technical-analyst-indicator-data/TechnicalAnalystIndicator.js";
+} from "./lib/resources/TechnicalAnalystIndicator/TechnicalAnalystIndicator.js";
 import { logger } from "./logger.js";
-import { CryptoCurrency } from "./lib/resources/CoinMarketCap/CoinMarketCap.js";
 import { FileUtils } from "./lib/Utils/FileUtils.js";
 import path from "path";
-const tai = new TechnicalAnalystIndicator();
+import { CryptoCurrency } from "./lib/resources/CryptoPrice/CryptoCurrency.js";
 
 const server = new McpServer({
   name: "os-info-mcp-server",
   version: "1.0.0",
 });
 
+const tai = new TechnicalAnalystIndicator();
+const criptoDataApi = new CryptoCurrency();
 // ... set up server resources, tools, and prompts ...
 
 server.tool(
@@ -65,35 +63,14 @@ server.tool(
       `🚀 getLatestCryptoCurrency called with symbol: ${symbol} name ${name} `
     );
 
-    const data = await fetch(
-      `${coinMarketCapUrl}/cryptocurrency/listings/latest`,
-      {
-        method: "GET",
-        headers: {
-          "X-CMC_PRO_API_KEY": coinMarketCapApiKey || "",
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((jsonData: any) => {
-        return (jsonData.data as unknown as CryptoCurrency[]).find(
-          (item) =>
-            item.symbol === symbol ||
-            item.name.toLowerCase() === name.toLowerCase()
-        );
-      })
-      .catch((err) => {
-        logger.log(`Error fetching cryptocurrency data: ${err}`);
-      });
-
+    const data = (await criptoDataApi.getListing(symbol, name)) || "";
     logger.log(`🎉 Crypto currency data: ${JSON.stringify(data, null, 2)}`);
 
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(data || [], null, 2),
+          text: JSON.stringify(data, null, 2),
         },
       ],
     };

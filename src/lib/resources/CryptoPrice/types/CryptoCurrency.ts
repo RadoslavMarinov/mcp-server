@@ -1,4 +1,9 @@
-export interface CryptoCurrency {
+export interface ICryptoCurrencyResponse {
+  data: ICryptoCurrency[];
+  status: Record<string, unknown>;
+}
+
+export interface ICryptoCurrency {
   id: number;
   name: string;
   symbol: string;
@@ -37,3 +42,9 @@ interface Currency {
   tvl?: null;
   last_updated: string;
 }
+
+// export const CryptoSymbolSchema = z.string();
+// export const CryptoCurrencyNameSchema = z.string();
+
+// export type CryptoSymbol = z.infer<typeof CryptoSymbolSchema>;
+// export type CryptoCurrencyName = z.infer<typeof CryptoCurrencyNameSchema>;

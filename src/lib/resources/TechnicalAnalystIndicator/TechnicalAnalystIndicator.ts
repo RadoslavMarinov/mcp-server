@@ -1,8 +1,5 @@
 import EnvUtils from "../../Utils/EnvUtils.js";
 import { logger } from "../../../logger.js";
-import { config } from "dotenv";
-import { FileUtils } from "../../Utils/FileUtils.js";
-import path from "path";
 import { z } from "zod";
 
 type Exchage = "binance";

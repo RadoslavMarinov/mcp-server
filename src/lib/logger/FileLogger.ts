@@ -15,4 +15,8 @@ export class FileLogger {
   log(message: string): void {
     this.logger.info(message);
   }
+
+  error(message: string): void {
+    this.logger.error(message);
+  }
 }
