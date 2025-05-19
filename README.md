@@ -1,6 +1,6 @@
 
 
-## Add  enviroment files
+## Add  environment files
   - Create a new `.env` file based on the example file `.env.example`
 
     ```sh
@@ -17,9 +17,9 @@
 
 ## Integration with Claude
 
-  - open Claude desktop
-  - open Settings -> Developer -> Edit Config
-  - add the following entry into the `mcpServers`
+  - Open Claude desktop
+  - Go to __Settings → Developer → Edit Config__
+  - Add the following entry to the `mcpServers`
 
     ```json
       "market-tools": {
@@ -29,28 +29,30 @@
     ```
 
     The configuration file should look similar to this:
+
     ![](./docs/claude/config-server.png) 
-  - restart Claude load the configuration and utilize the new tool
+  - restart Claude to load the configuration and utilize the new tool
 
 
 
 
 ## Examples
 
-  - ### Accept requests to check the prices of specific crypto assets.
-    __Input__:
+  - ### ✅ Check the price of specific crypto assets.
+    __Example__:
     > What is the price of Ethereum?
 
-  - ### Determine whether the price of a given crypto asset is in a trending or ranging regime on the 1-hour chart, using both price data and technical analysis (TA) indicators
-    __Input__:
+  - ### 📈 Determine if a crypto asset is trending or ranging on the 1-hour chart using TA indicators.
+    __Example__:
       > Tell me if Bitcoin is currently ranging or trending using BTC/USDT symbol
+
+## External resources
+[Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1/#)
+
+[Technical Analysis Indicators API](https://taapi.io/indicators)
 
 
 ## Notes:
 
-  - 👉 Due to the limitations imposed upon by free plan of the APIs used, some results might not be satisfactory or of high value. Some endpoint might refuse to return data for certain _symbols_ or _indicators_ as they might not be part of the free plan. Another common issue with free plan usage is throttling. That is consequent requests are being rejected until the quota is freed up.
+  - 👉 Due to limitations imposed by the free plans of the APIs used, some results might be inaccurate or unavailable. Some endpoints may refuse to return data for certain symbols or indicators if they are not part of the free tier. Another common issue with free plans is throttling, where consecutive requests are rejected until the quota is refreshed.
 
-[Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1/#)
-[Technical Analysis Indicators API](https://taapi.io/indicators)
-
-https://github.com/modelcontextprotocol/typescript-sdk
