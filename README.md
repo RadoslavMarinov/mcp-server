@@ -1,15 +1,18 @@
 
 
+## Add  enviroment files
+  - Create a new `.env` file based on the example file `.env.example`
+
+    ```sh
+    cp .env.example .env
+    ```
+  - Enter your values values for the two APIs __COIN_MARKET_CAP_API_KEY__ and __TA_API_KEY__
+
 ## Dockerization
 
   - Build docker image
     ```bash
     docker build -t mcp-server .
-    ```
-
-  - Run the image
-    ```bash
-    docker run -i --env-file '/Users/radoslavmarinov/code/riko/git/mcp-server/.env' mcp-server
     ```
 
 ## Integration with Claude

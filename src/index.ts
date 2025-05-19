@@ -5,18 +5,29 @@ npx tsx src/main.ts
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { config } from "dotenv";
+
+const dotenvFilePath = path.join(
+  FileUtils.getDirName(import.meta.url),
+  "../",
+  ".env"
+);
+config({
+  path: dotenvFilePath,
+});
 
 const coinMarketCapApiKey = "f655223f-0c4b-41d5-ab85-bd25350b0d28"; // process.env.COIN_MARKET_CAP_API_KEY;
 const coinMarketCapUrl = "https://pro-api.coinmarketcap.com/v1"; // process.env.COIN_MARKET_CAP_URL;
 import "dotenv/config";
 import {
-  IndicatorQueryParams,
   IndicatorSchema,
   TechnicalAnalystIndicator,
   ISymbolSchema,
 } from "./lib/resources/technical-analyst-indicator-data/TechnicalAnalystIndicator.js";
 import { logger } from "./logger.js";
 import { CryptoCurrency } from "./lib/resources/CoinMarketCap/CoinMarketCap.js";
+import { FileUtils } from "./lib/Utils/FileUtils.js";
+import path from "path";
 const tai = new TechnicalAnalystIndicator();
 
 const server = new McpServer({

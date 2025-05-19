@@ -5,15 +5,6 @@ import { FileUtils } from "../../Utils/FileUtils.js";
 import path from "path";
 import { z } from "zod";
 
-const dotenvFilePath = path.join(
-  FileUtils.getDirName(import.meta.url),
-  "../../../../",
-  ".env"
-);
-config({
-  path: dotenvFilePath,
-});
-
 type Exchage = "binance";
 
 export const TimeIntervalSchema = z.enum([
@@ -81,7 +72,7 @@ export interface IndicatorQueryParams {
 export class TechnicalAnalystIndicator {
   constructor(
     public url: string = EnvUtils.getEnv("TAAPI_URL"),
-    public apiKey: string = EnvUtils.getEnv("TAAPI_KEY")
+    public apiKey: string = EnvUtils.getEnv("TA_API_KEY")
   ) {}
 
   async getIndicator({
