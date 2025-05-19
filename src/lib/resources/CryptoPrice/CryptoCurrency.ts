@@ -8,7 +8,7 @@ import {
 export class CryptoCurrency {
   constructor(
     private baseUrl: string = EnvUtils.getEnv("COIN_MARKET_CAP_URL"),
-    private apApiKey: string = EnvUtils.getEnv("COIN_MARKET_CAP_API_KEY")
+    private apiApiKey: string = EnvUtils.getEnv("COIN_MARKET_CAP_API_KEY")
   ) {}
 
   /**
@@ -42,7 +42,7 @@ export class CryptoCurrency {
       const response = await fetch(url, {
         method: "GET",
         headers: {
-          "X-CMC_PRO_API_KEY": this.apApiKey,
+          "X-CMC_PRO_API_KEY": this.apiApiKey,
           "Content-Type": "application/json",
         },
       });

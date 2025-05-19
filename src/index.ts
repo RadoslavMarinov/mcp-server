@@ -33,14 +33,13 @@ const server = new McpServer({
 
 const tai = new TechnicalAnalystIndicator();
 const criptoDataApi = new CryptoCurrency();
-// ... set up server resources, tools, and prompts ...
 
 server.tool(
-  "getCrypotoCurrencyAnalytics",
+  "getCryptoCurrencyAnalytics",
   "Fetches popular Technical Analysis (TA) Indicator Data on US stocks and cryptocurrencies",
   { symbol: ISymbolSchema, indicator: IndicatorSchema },
   async ({ symbol, indicator }) => {
-    logger.log(`🚀 getCrypotoCurrencyAnalytics called with symbol: ${symbol}`);
+    logger.log(`🚀 getCryptoCurrencyAnalytics called with symbol: ${symbol}`);
     const data = await tai.getIndicator({
       exchange: "binance",
       symbol: symbol,

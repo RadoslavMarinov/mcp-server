@@ -55,4 +55,7 @@
 ## Notes:
 
   - 👉 Due to limitations imposed by the free plans of the APIs used, some results might be inaccurate or unavailable. Some endpoints may refuse to return data for certain symbols or indicators if they are not part of the free tier. Another common issue with free plans is throttling, where consecutive requests are rejected until the quota is refreshed.
+    
+    ❌ Example error:
+    > Error fetching data: Too Many Requests
 

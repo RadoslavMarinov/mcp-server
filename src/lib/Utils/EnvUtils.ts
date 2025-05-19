@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 class EnvUtils {
   static getEnv(key: string, defaultValue?: string): string {
     const value = process.env[key];
