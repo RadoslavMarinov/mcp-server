@@ -47,9 +47,9 @@
       > Tell me if Bitcoin is currently ranging or trending using BTC/USDT symbol
 
 ## 🔗 External resources
-[Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1/#)
+  -  [Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1/#)
 
-[Technical Analysis Indicators API](https://taapi.io/indicators)
+  - [Technical Analysis Indicators API](https://taapi.io/indicators)
 
 
 ## 🗒 Notes:
